@@ -1,83 +1,75 @@
-# 🚦 Intelligent Intersection Management: Minimizing Traffic Delays through Adaptive Timing
+# Intelligent Intersection Management: Minimizing Traffic Delays through Adaptive Timing
 
-## 📌 Project Overview
-Traffic congestion at intersections is a critical issue in urban areas, leading to increased delays, fuel wastage, and pollution. Traditional traffic light systems use **fixed-timing mechanisms**, which fail to dynamically adapt to real-time traffic conditions.
+## Project Overview
 
-This project proposes an **adaptive traffic management system** that dynamically adjusts traffic light durations based on real-time congestion levels. By employing **simulation models** and **machine learning-based vehicle detection**, this system can effectively **reduce waiting times** at intersections.
+This project focuses on developing an **adaptive traffic signal control system** to **reduce congestion and minimize waiting times** at intersections. Traditional traffic lights operate on fixed timing, which often leads to inefficiencies in handling real-time traffic fluctuations. Our approach employs **dynamic signal adjustments** based on real-time vehicle counts and congestion levels.
 
-## 🎯 Objectives
-✔️ Develop an **adaptive traffic control algorithm** that dynamically changes green light durations.  
-✔️ Simulate **real-world traffic scenarios** using Python (Pygame).  
-✔️ Implement **YOLO-based vehicle detection** for real-time traffic monitoring.  
-✔️ Compare **adaptive vs. static traffic control** based on performance metrics such as **average waiting time**.  
+Using **simulation techniques** and **machine learning models** for vehicle detection and counting, this project aims to enhance **urban traffic management** by optimizing signal timing dynamically.
 
----
+## Features
 
-## 🏗️ Project Architecture
-This project consists of **three main components**:
+- **Adaptive Traffic Signal Algorithm**: Dynamically allocates green light time based on real-time congestion data.
+- **Intersection Simulation**: A **pygame-based** simulation environment to model traffic scenarios.
+- **Vehicle Detection & Counting**: Utilizes **YOLOv8** for real-time vehicle detection, classification, and counting.
+- **Performance Analysis**: Compares adaptive signal control with static signal timings using lane-wise average waiting times.
 
-1. **Traffic Simulation Model**  
-   - Built using **Pygame** to represent a **four-lane intersection**.  
-   - Simulates **dynamic traffic flow** by generating vehicles with varying speeds and densities.  
-   - Implements **fixed and adaptive traffic light control** mechanisms for comparison.
+## Methodology
 
-2. **Adaptive Traffic Algorithm**  
-   - Uses real-time **vehicle count** and **lane-wise congestion** to allocate green light dynamically.  
-   - Computes **optimal green signal time** based on traffic inflow and outflow rates.  
-   - Prevents excessive waiting time in one lane by **balancing** signal durations.
+### 1. **Traffic Junction Simulation**
+- A four-way intersection is simulated using **pygame**.
+- Each road has an **incoming** and **outgoing** lane.
+- Vehicles include **cars, buses, trucks, and bikes**, with different movement speeds.
+- **Traffic signals operate dynamically**, adjusting to real-time congestion.
 
-3. **Vehicle Detection & Counting (YOLOv8)**  
-   - Uses **YOLOv8** (You Only Look Once) for **real-time vehicle classification and counting**.  
-   - Trained on **5,000+ images** for detecting different vehicle types (cars, buses, trucks, bikes).  
-   - Provides **accurate vehicle density estimation** for adaptive control.  
+### 2. **Adaptive Traffic Signal Algorithm**
+- **Green Light Selection**: The lane with maximum congestion is chosen for a green signal.
+- **Dynamic Timing Calculation**:
+  - Green time = `α * vehicle_count`
+  - Vehicles are dynamically **added** (incoming traffic) and **removed** (outflow).
+- **Control Variables**:
+  - `Traffic Density` (Inflow Rate)
+  - `Outflow Constant (β)`
+  - `Queue Time Constant (α)`
+- **Mathematical Model**: Traffic updates occur at each iteration, ensuring smooth flow and **optimized signal control**.
 
----
+### 3. **Vehicle Detection & Counting**
+- YOLOv8-based **object detection model** trained on traffic datasets.
+- **Bounding box detection** enables vehicle counting for real-world integration.
+- Trained on **5,000+ images**, achieving **mAP50 scores of 0.6 to 0.7** after 20 epochs.
 
-## 🚀 Features
-✅ **Dynamic Traffic Light Control**: Adapts to real-time congestion instead of following pre-defined signal timings.  
-✅ **Lane-wise Traffic Optimization**: Allocates green signal to the most congested lane dynamically.  
-✅ **YOLO-based Vehicle Detection**: Uses deep learning to detect and count vehicles.  
-✅ **Performance Benchmarking**: Compares adaptive control with static signals using **average lane-wise waiting times**.  
-✅ **Scalable & Realistic**: Can be extended to **multi-intersection networks** for smart city applications.  
+## Results
 
----
+- **Significant reduction** in lane-wise waiting times using adaptive control vs. static signals.
+- **YOLOv8 model** effectively detects vehicles despite image quality limitations.
+- **Dynamic adjustments** successfully respond to fluctuating traffic conditions.
 
-## 📊 Methodology
+## Technologies Used
 
-### 1️⃣ Traffic Simulation Model
-The simulation replicates a **four-lane intersection** where:
-- Vehicles (cars, buses, trucks, bikes) arrive at different **random rates**.
-- The **Pygame engine** visualizes traffic flow and signal transitions.
-- The **static model** follows **predefined signal times**, while the **adaptive model** dynamically changes signal durations.
+- **Python**
+- **Pygame** (for simulation)
+- **OpenCV & YOLOv8** (for vehicle detection)
+- **NumPy, Matplotlib** (for data analysis)
+- **Machine Learning** (model training & optimization)
 
-### 2️⃣ Adaptive Traffic Control Algorithm
-- **Traffic Density Calculation**: Measures vehicle congestion **Vᵢ** in each lane.
-- **Lane Selection**: Chooses the most congested lane for **green signal**.
-- **Dynamic Green Time Allocation**: Computes optimal green signal duration based on:
-  - **Traffic inflow rate (Dᵢ)**  
-  - **Outflow rate (β)**  
-  - **Queue time constant (α)**  
+## Future Work
 
-> **Mathematical Model:**  
-> - Next Lane Selection: `Next = argmax(Vᵢ)`  
-> - Green Time: `GreenTime = α * Vᵢ`  
-> - Traffic Update: `Vᵢ(new) = Vᵢ(old) * (1 + α * Dᵢ - α * β)`
+- **Real-world deployment** using live traffic camera feeds.
+- **Integration with IoT sensors** for enhanced real-time decision-making.
+- **Further optimization** of control variables to reduce congestion even further.
 
-### 3️⃣ Vehicle Detection & Counting (YOLOv8)
-- Trained **YOLOv8** on **5,000+ labeled images**.
-- Evaluated **precision, recall, and mAP scores** to validate model accuracy.
-- Used **Bounding Box Detection** for real-time vehicle counting.
+## Contributors
 
-### 4️⃣ Performance Analysis
-- Compared **static vs. adaptive traffic control** by measuring:
-  - **Lane-wise Average Waiting Time**  
-  - **Traffic Flow Efficiency**  
-  - **Vehicle Throughput Improvement**  
+- **Amit Appanna Talawar**
+- **Anant Terkar**
+- **Udit Jain**
+- **Rahul Pentamsetty**
 
-> **Key Findings:**  
-> ✅ Adaptive control **reduced waiting times** significantly.  
-> ✅ More **efficient traffic flow** during high congestion periods.  
-> ✅ Vehicle detection provided **accurate real-time traffic density estimation**.
+## Acknowledgments
+
+This project was developed under the guidance of:
+- **Dr. Prabhu Prasad B M** (Asst. Prof., Dept. of Computer Science and Engineering)
+- **Dr. Manjunath K V** (Asst. Prof., Dept. of Data Science and Intelligent Systems)
+- **Indian Institute of Information Technology Dharwad**
 
 For access to dataset please use the following link:
 https://drive.google.com/drive/folders/1r_Mutb5PlElaaDyPDtaZipHgl5FdDsLq?usp=sharing
